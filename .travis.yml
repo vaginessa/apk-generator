@@ -36,4 +36,13 @@ before_install:
   - sudo apt-get install -y python2.7
 
 
-after_success: python travis_upload_release_to_github.py
+# after_success: python travis_upload_release_to_github.py
+
+deploy:
+  - provider: releases
+    api_key:
+      f5cbe190e3f9aaad5fd702fa08ce62c44f895da4
+    file: app/build/outputs/apk/app-release.apk
+    on:
+      repo: mananwason/apk-generator
+      tags: true
