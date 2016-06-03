@@ -1,6 +1,6 @@
 language: android
 language: android
-sudo: true
+sudo: required
 jdk: oraclejdk7
 env:
   global:
