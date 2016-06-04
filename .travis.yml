@@ -29,22 +29,18 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-$ANDROID_TARGET
-  script:
-  - ./gradlew build
-  # - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  # - emulator -avd test -no-skin -no-audio -no-window &
-  # - android-wait-for-emulator
-  # - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-  
+script: "./gradlew build"
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -y python2.7
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: vtdrVGnFX23yk880LqLv/NwOJW8uJ+ZdAh1hqu4/uzhZFnRmFRjFnKaOmvw9Ws8U/hrIFTalpewbaoAVb9VZkffixpWqgxiFpNi6wHFNWXRlFmu9aQ08v+/cTDiXp8ZPOO3RrlWRaoyIZ4bEc8BrGhq0Y7r52tb71DsKSzapTZzUfs4BL/tqT0eX4itzz6swkGS6bP4XShy3JWhCGHeXSczJo1BlXljw/9TuotDBvutQVO4lgqJFLz7+wHeDeZOzJsiHEUahbXGsl44NL0k/1Iz4nHqJNyWvTBXTgxkos8USmt0cLplEtTfTm7OkVubGsugXRrSC38VdHplFeVca5FyFCph538taTiNb0L5j3l8DlOnw1l/WvzBPvo91SlYGTvZCCxgi75cBOMgfbB0zLGf8ww498hxhzxyDCgX1Qp8ozXj/lDSFSmzrzQqlcE1WbTupjVNAXbQFy0UbjCjHXE4lhftcZ8RcHJDyxOCKyprSEICX3FmORJMEKeS0TtpkaD3x8QcRhWeT68DjZ9qFZqaXaLze2rtvCeihvz9RGkWcsgBUy1h75foe5x6ZnbSUpCaJXqXcSelzrWVq+9R4COnQMejovbsJ306b3zAecgr9ofRbPExmGpfYNlsxFV3XM/17uxlRCdg8Li6glNqrwXle0GTdoSzdQ9PknGJ7w0U=
+    secure: VUz/DjL6esI3C5Wj3+/iuwTAsElk92vVU2QSjs+qWv80di6qGi1me7AGy6+PybX+Q5BB0qMOrGNX0X78AzDjozAcCoevfWKpxWgSw9hiz43uk6vLS7CUUB5HPmRXU3niSSDEZapqM9AYjgZctwCrk1q8yJMemsXuGHidRDYhpOdv7ytwtaDu3K8/TNTuMu4UdPoATDZ7AuM6NjuLbf5SXnLO3QFL+HwzVH/oe07A35xB8rKS4t2DjOPe5b/RLsytLnjo6dMDZRYl08bZ0J+kZLDKLZAI76WALmDR0Ruc6uGFtqK3DLi3YYC4Lu9CRj8lQ7NuaznMhgjzSzsJNOGeR1V7VoBIvzGIRk/AgExPXP0Jw/62wHpyUgznC1tS3ObPVAUwz5PLbOI8m+MG2JpIZampmA4Rog1mCXHI/pPYSmGd4zUmNO6WmNrzKVMSP51nBCjNPx7jvRBZkcAnKoTyOZPb5wCLP3Ac6hqChG6TQiLml8F8jKg8lqdnXJEs8nw2x/92F089R3s6MLwCUiAzhcUleRKUrISBGBRa93GAfwGXSSkXrpLYfsPwNNaWsybXvoIGHEvDLoRqFN5fPJhqWXYLLST5mQbiQxBANHQxOspxgKLiKEHv5WHPwwkSFG0e1Jeq5Q4MVS0/Rjne0qgvCgpx0YKUZe7XErC9LMHSO/o=
   file:
     - "app/build/outputs/apk/app-fdroid-debug.apk"
     - "app/build/outputs/apk/app-googleplay-debug.apk"
   on:
     tags: true
     repo: mananwason/apk-generator
-    branch: master
