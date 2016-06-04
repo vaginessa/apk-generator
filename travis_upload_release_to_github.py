@@ -97,9 +97,8 @@ if response.status == 422:
                      'User-Agent': github_header_user_agent
                  })
     response = conn.getresponse()
-
+print response.status," "
 if response.status not in range(200, 204):
-	print response.status
     print('Unable to create or get release, abort', file=sys.stderr)
     exit(0)
 
