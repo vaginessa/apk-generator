@@ -99,6 +99,7 @@ if response.status == 422:
     response = conn.getresponse()
 
 if response.status not in range(200, 204):
+	print response.status
     print('Unable to create or get release, abort', file=sys.stderr)
     exit(0)
 
