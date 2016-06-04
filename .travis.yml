@@ -29,21 +29,22 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-$ANDROID_TARGET
-script: "./gradlew build"
-before_install:
-- sudo apt-get update -qq
-- sudo apt-get install -y python2.7
-# deploy:
-#   matrix:
-#   - provider: releases
-#     api_key: 5f0705c9e963ba4a96d3e4f8259c7265a67cd51c
-#     file: app/build/outputs/apk/app-googleplay-release-unsigned.apk
-#     on:
-#       repo: mananwason/apk-generator
-#       tags: true
-#   api-key:
-#     secure: ixdyTbmhjr3/e53mZ8K3ElLN6m0NMCwHx4Lgjf/i9m80jTDyybHdobLd3zYPY0sZCtmORoGZOU4/5yfebVt3tklgFcYi0h67oSqKdXWqzkEuekDqzbD1hnwQBjs9QVxbUBAzAqrGLRRyj8bletNPxEYN3WCdAj/zpfyZ6GSp1vyr9aGELRQvPgRz0NVPB8YNTvuqPA5a/Kiiik9ZDL5bWFBiFQ7LosCv/2iyYOJaWGfB+C0KaI8ByKLBmh7ec9cwhK/yuPy+HLv9nwjbIgM8bffuZc4f3O1tLZeeDe4YFuSG+Bfps35+eSSdDddF8joXtBXpWsYgSHq0pRfvfi0aMKLhykyP9jCCIeG2uzb++fYWB9jTZAinCfXtZx7N8nvhsHctMohbdlqoq2pjhO7XncJFDQWDOvs6H4Gl/qyHEZU3JLtxK8b3rv0TvIx2p9G5FJSibbyCRB3cNppApm8tGb4VsZzkVsS3Uu9qkvdzQVYyqd2ji1AFkoklYTV1gxRHAmi+76ctcezfiMGCzOr+XQ7ZkkRYIgwE74Xp2JEPAqKdmnt/+wNx5XOj472MVQMTtg7+fClvaIsPj7KDzTYH/ho8uXlOB1BSk3zjdIcP61GzauLy2ZyBSAC+317OD9CGeQq7TQgbYwxi/3nVql9DGdlzRmQdM8ggOaf+59Ol1tw=
-
-after_success: 
-- chmod a+x travis_upload_release_to_github.py
-- ./travis_upload_release_to_github.py
+  script:
+  - ./gradlew build
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: vtdrVGnFX23yk880LqLv/NwOJW8uJ+ZdAh1hqu4/uzhZFnRmFRjFnKaOmvw9Ws8U/hrIFTalpewbaoAVb9VZkffixpWqgxiFpNi6wHFNWXRlFmu9aQ08v+/cTDiXp8ZPOO3RrlWRaoyIZ4bEc8BrGhq0Y7r52tb71DsKSzapTZzUfs4BL/tqT0eX4itzz6swkGS6bP4XShy3JWhCGHeXSczJo1BlXljw/9TuotDBvutQVO4lgqJFLz7+wHeDeZOzJsiHEUahbXGsl44NL0k/1Iz4nHqJNyWvTBXTgxkos8USmt0cLplEtTfTm7OkVubGsugXRrSC38VdHplFeVca5FyFCph538taTiNb0L5j3l8DlOnw1l/WvzBPvo91SlYGTvZCCxgi75cBOMgfbB0zLGf8ww498hxhzxyDCgX1Qp8ozXj/lDSFSmzrzQqlcE1WbTupjVNAXbQFy0UbjCjHXE4lhftcZ8RcHJDyxOCKyprSEICX3FmORJMEKeS0TtpkaD3x8QcRhWeT68DjZ9qFZqaXaLze2rtvCeihvz9RGkWcsgBUy1h75foe5x6ZnbSUpCaJXqXcSelzrWVq+9R4COnQMejovbsJ306b3zAecgr9ofRbPExmGpfYNlsxFV3XM/17uxlRCdg8Li6glNqrwXle0GTdoSzdQ9PknGJ7w0U=
+  file:
+    - "app/build/outputs/apk/app-fdroid-debug.apk"
+    - "app/build/outputs/apk/app-googleplay-debug.apk"
+  on:
+    tags: true
+    repo: mananwason/apk-generator
+    branch: master
