@@ -1,5 +1,4 @@
 language: android
-language: android
 sudo: required
 jdk: oraclejdk7
 env:
@@ -28,21 +27,17 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-$ANDROID_TARGET
-
-script: ./gradlew build
-
+script: "./gradlew build"
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y python2.7
-
-
-# after_success: python travis_upload_release_to_github.py
-
+- sudo apt-get update -qq
+- sudo apt-get install -y python2.7
 deploy:
+  matrix:
   - provider: releases
-    api_key:
-      5f0705c9e963ba4a96d3e4f8259c7265a67cd51c
+    api_key: 5f0705c9e963ba4a96d3e4f8259c7265a67cd51c
     file: app/build/outputs/apk/app-googleplay-release-unsigned.apk
     on:
       repo: mananwason/apk-generator
       tags: true
+  api-key:
+    secure: ixdyTbmhjr3/e53mZ8K3ElLN6m0NMCwHx4Lgjf/i9m80jTDyybHdobLd3zYPY0sZCtmORoGZOU4/5yfebVt3tklgFcYi0h67oSqKdXWqzkEuekDqzbD1hnwQBjs9QVxbUBAzAqrGLRRyj8bletNPxEYN3WCdAj/zpfyZ6GSp1vyr9aGELRQvPgRz0NVPB8YNTvuqPA5a/Kiiik9ZDL5bWFBiFQ7LosCv/2iyYOJaWGfB+C0KaI8ByKLBmh7ec9cwhK/yuPy+HLv9nwjbIgM8bffuZc4f3O1tLZeeDe4YFuSG+Bfps35+eSSdDddF8joXtBXpWsYgSHq0pRfvfi0aMKLhykyP9jCCIeG2uzb++fYWB9jTZAinCfXtZx7N8nvhsHctMohbdlqoq2pjhO7XncJFDQWDOvs6H4Gl/qyHEZU3JLtxK8b3rv0TvIx2p9G5FJSibbyCRB3cNppApm8tGb4VsZzkVsS3Uu9qkvdzQVYyqd2ji1AFkoklYTV1gxRHAmi+76ctcezfiMGCzOr+XQ7ZkkRYIgwE74Xp2JEPAqKdmnt/+wNx5XOj472MVQMTtg7+fClvaIsPj7KDzTYH/ho8uXlOB1BSk3zjdIcP61GzauLy2ZyBSAC+317OD9CGeQq7TQgbYwxi/3nVql9DGdlzRmQdM8ggOaf+59Ol1tw=
