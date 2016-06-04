@@ -41,8 +41,8 @@ before_install:
 deploy:
   - provider: releases
     api_key:
-      f5cbe190e3f9aaad5fd702fa08ce62c44f895da4
-    file: app/build/outputs/apk/app-release.apk
+      5f0705c9e963ba4a96d3e4f8259c7265a67cd51c
+    file: app/build/outputs/apk/app-googleplay-release-unsigned.apk
     on:
       repo: mananwason/apk-generator
       tags: true
