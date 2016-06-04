@@ -25,6 +25,8 @@ github_header_user_agent = 'TravisUploader/0.1'
 DEVNULL = open(os.devnull, 'w')
 repo_url = None
 
+
+
 try:
     repo_url = check_output(['git', 'config', '--get', 'remote.origin.url']).splitlines()[0]
 except CalledProcessError:
