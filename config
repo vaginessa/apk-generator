@@ -1,8 +1,5 @@
 {
-  "Email":
-  "dev@fossasia.org",
-  "App_Name":
-  "Open Event",
-  "Api_Link":
-  "https://raw.githubusercontent.com/fossasia/open-event/master/testapi/"
+  "Email":"dev@fossasia.org",
+  "App_Name":"Open Event1",
+  "Api_Link":"https://raw.githubusercontent.com/fossasia/open-event/master/testapi/"
 }
